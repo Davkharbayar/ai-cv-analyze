@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= job.title %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/jobdetail.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
+    <meta property="og:title" content="AI-Powered CV Analysis Platform" />
+    <meta property="og:description" content=<%= job.title %>
+    <meta property="og:image" content="https://i.ibb.co/HqDLJyb/37c4e7a3-1d87-4335-b58b-4b261574e6cc.webp" />
+    <meta property="og:type" content="website" />
+
+
+</head>
+<body>
+    <svg id="background-animation"></svg>
+
+    <main>
+        
+    <button id="upload-cv-btn" class="back-button" onclick="goBackToList()">Back to list</button>
+
+        <div class="job-detail-container">
+            <h3 class="job-title"><%= job.title %></h3>
+            <h3 class="job-posteddate"><%= new Date(job.posteddate).toLocaleDateString() %></h3>
+            
+            <p class="job-description">
+                <strong>Description:</strong> <%= job.description %>
+            </p>
+            <p class="job-department">
+                <strong>Department:</strong> <%= job.department %>
+            </p>
+            <p class="job-location">
+                <strong>Location:</strong> <%= job.location %>
+            </p>
+            <p class="job-employmenttype">
+                <strong>Employment Type:</strong> <%= job.employmenttype %>
+            </p>
+            <p class="job-requirements">
+                <strong>Requirements:</strong>
+                <ul>
+                    <% job.requirements.skills.forEach(function(skill) { %>
+                        <li> <strong><%= skill %></strong></li>
+                    <% }); %>
+                </ul>
+                <p><strong>Experience:</strong> <%= job.requirements.experience %> years</p>
+            </p>
+
+
+            <!-- Upload CV button -->
+
+
+            <div id="typewriter" style="display: none;"></div>
+            <div id="upload-result" class="upload-result-card" style="display: none;"></div>
+
+            <button id="upload-cv-btn" class="btn btn-primary" onclick="uploadCV(<%= job.jobid %>)"
+                title="Upload your CV and let our AI analyze your skills to match you with the best opportunities!">
+                Upload LinkedIn CV
+            </button>
+        </div>
+
+
+        <div class="job-list">
+            <% if (similarjobs && similarjobs.length) { %>
+                <% similarjobs.forEach(job => { %>
+                    <div class="job-card" onclick="jobDetail(<%= job.jobid %>)">
+                        <h3 class="job-title"><%= job.title %></h3>
+                        <p class="job-detail">
+                            <i class="fas fa-info-circle"></i> <%= job.description %>
+                        </p>
+                        <p class="job-detail">
+                            <i class="fas fa-building"></i> <strong>Department:</strong> <%= job.department %>
+                        </p>
+                        <p class="job-detail">
+                            <i class="fas fa-location-dot"></i> <strong>Location:</strong> <%= job.location %>
+                        </p>
+                        <p class="job-detail">
+                            <i class="fas fa-briefcase"></i> <strong>Employment Type:</strong> <%= job.employmenttype %>
+                        </p>
+                        <p class="job-detail">
+                            <i class="fas fa-calendar-alt"></i> <strong>Posted Date:</strong> <%= new Date(job.posteddate).toLocaleDateString() %>
+                        </p>
+                    </div>
+                <% }); %>
+            <% } else { %>
+            <% } %>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy;  MDR<%= new Date().getFullYear() %> AI-Powered CV Analysis Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function goBackToList() {
+            window.location.href = '/';
+        }
+    </script>
+    <script src="/js/d3.js"></script>
+    <script src="/js/pdf-render.js"></script>
+    <script src="/js/typewriter-effect.js"></script>
+    <script src="/js/other.js"></script>
+    <script src="/js/upload-cv.js"></script>
+</body>
+</html>

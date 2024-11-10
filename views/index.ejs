@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered CV Analysis Platform</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <meta property="og:title" content="AI-Powered CV Analysis Platform" />
+    <meta property="og:description" content="Smart AI system that detects and evaluates LinkedIn CVs for precise job matching." />
+    <meta property="og:image" content="https://i.ibb.co/HqDLJyb/37c4e7a3-1d87-4335-b58b-4b261574e6cc.webp" />
+    <meta property="og:type" content="website" />
+</head>
+<body>
+    <!-- SVG container for D3 background animation -->
+    <svg id="background-animation"></svg>
+
+    <!-- Header for the application -->
+    <header class="header">
+        <h1>AI-Powered CV Analysis Platform</h1>
+        <p>Smart AI system that detects and evaluates LinkedIn CVs for precise job matching.</p>
+    </header>
+
+    <!-- Main content area -->
+    <main>
+        <div class="job-list">
+            <% if (data && data.length) { %>
+                <% data.forEach(job => { %>
+                    <div class="job-card" onclick="jobDetail(<%= job.jobid %>)">
+                        <h3 class="job-title"><%= job.title %></h3>
+                        <p class="job-detail">
+                            <i class="fas fa-info-circle"></i> <%= job.description %>
+                        </p>
+                        <p class="job-detail">
+                            <i class="fas fa-building"></i> <strong>Department:</strong> <%= job.department %>
+                        </p>
+                        <p class="job-detail">
+                            <i class="fas fa-location-dot"></i> <strong>Location:</strong> <%= job.location %>
+                        </p>
+                        <p class="job-detail">
+                            <i class="fas fa-briefcase"></i> <strong>Employment Type:</strong> <%= job.employmenttype %>
+                        </p>
+                        <p class="job-detail">
+                            <i class="fas fa-calendar-alt"></i> <strong>Posted Date:</strong> <%= new Date(job.posteddate).toLocaleDateString() %>
+                        </p>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No job postings available at the moment.</p>
+            <% } %>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy;  MDR<%= new Date().getFullYear() %> AI-Powered CV Analysis Platform. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        function jobDetail(jobId) {
+            window.location.href = '/job/' + jobId;
+        }
+    </script>
+    <script src="/js/d3.js"></script>
+</body>
+</html>
